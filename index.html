@@ -188,32 +188,68 @@
             
             <div class="input-group">
                 <label for="genre">ジャンル</label>
-                <select id="genre">
+                <select id="genre" onchange="updateMoodOptions()">
                     <option value="">ジャンルを選択</option>
-                    <option value="rage-trap">RAGE/Dark Trap</option>
-                    <option value="melodic-hiphop">Melodic Hip-Hop</option>
-                    <option value="rnb">R&B/Soul</option>
-                    <option value="electronic">Electronic/EDM</option>
-                    <option value="lofi">Lo-Fi/Chill</option>
-                    <option value="drill">Drill/UK Drill</option>
-                    <option value="trap">Trap</option>
-                    <option value="house">House</option>
-                    <option value="ambient">Ambient</option>
+                    <optgroup label="🔥 Trap / Rage系">
+                        <option value="rage-trap">RAGE/Dark Trap</option>
+                        <option value="trap">Trap</option>
+                        <option value="pluggnb">Pluggnb</option>
+                        <option value="plugg">Plugg</option>
+                    </optgroup>
+                    <optgroup label="🎭 Experimental / Hyperpop系">
+                        <option value="hyperpop">Hyperpop/Digicore</option>
+                        <option value="glitchcore">Glitchcore</option>
+                    </optgroup>
+                    <optgroup label="🚗 Phonk / Drift系">
+                        <option value="phonk">Phonk</option>
+                        <option value="drift-phonk">Drift Phonk</option>
+                        <option value="memphis-phonk">Memphis Phonk</option>
+                    </optgroup>
+                    <optgroup label="🏙️ Regional系">
+                        <option value="drill">Drill/UK Drill</option>
+                        <option value="ny-drill">NY Drill</option>
+                        <option value="jersey-club">Jersey Club</option>
+                        <option value="detroit-type">Detroit/Flint Type</option>
+                    </optgroup>
+                    <optgroup label="💔 Emotional系">
+                        <option value="melodic-hiphop">Melodic Hip-Hop</option>
+                        <option value="emo-rap">Emo Rap/Sad Trap</option>
+                        <option value="rnb">R&B/Soul</option>
+                    </optgroup>
+                    <optgroup label="🌍 Global / Fusion系">
+                        <option value="afrobeats">Afrobeats Fusion</option>
+                        <option value="latin-trap">Latin Trap</option>
+                        <option value="uk-garage">UK Garage/2-Step</option>
+                    </optgroup>
+                    <optgroup label="🎧 Electronic / Chill系">
+                        <option value="electronic">Electronic/EDM</option>
+                        <option value="lofi">Lo-Fi/Chill</option>
+                        <option value="house">House</option>
+                        <option value="ambient">Ambient</option>
+                    </optgroup>
                 </select>
             </div>
-            
+
             <div class="input-group">
-                <label for="mood">ムード</label>
+                <label for="mood">ムード <span id="moodHint" style="font-weight: normal; color: #666; font-size: 0.9em;"></span></label>
                 <select id="mood">
                     <option value="">ムードを選択</option>
-                    <option value="aggressive">Aggressive</option>
-                    <option value="dreamy">Dreamy</option>
-                    <option value="energetic">Energetic</option>
-                    <option value="chill">Chill</option>
-                    <option value="dark">Dark</option>
-                    <option value="luxury">Luxury</option>
-                    <option value="vintage">Vintage</option>
-                    <option value="futuristic">Futuristic</option>
+                    <option value="aggressive">Aggressive - 攻撃的</option>
+                    <option value="dreamy">Dreamy - 夢幻的</option>
+                    <option value="energetic">Energetic - エネルギッシュ</option>
+                    <option value="chill">Chill - リラックス</option>
+                    <option value="dark">Dark - ダーク</option>
+                    <option value="luxury">Luxury - ラグジュアリー</option>
+                    <option value="vintage">Vintage - ヴィンテージ</option>
+                    <option value="futuristic">Futuristic - 未来的</option>
+                    <option value="chaotic">Chaotic - カオス</option>
+                    <option value="ethereal">Ethereal - 幽玄</option>
+                    <option value="melancholic">Melancholic - メランコリック</option>
+                    <option value="hypnotic">Hypnotic - 催眠的</option>
+                    <option value="menacing">Menacing - 威圧的</option>
+                    <option value="nostalgic">Nostalgic - ノスタルジック</option>
+                    <option value="euphoric">Euphoric - ユーフォリック</option>
+                    <option value="gritty">Gritty - グリッティ</option>
                 </select>
             </div>
             
@@ -235,90 +271,271 @@
     </div>
 
     <script>
-        // ジャンル別テンプレート定義
+        // ジャンル別テンプレート定義 - 2025年モダンアートワークスタイル
         const genreTemplates = {
+            // === Trap / Rage系 ===
             'rage-trap': {
-                template: '"[TRACK_TITLE]" dark rage trap album cover, [VISUAL_ELEMENTS], bold red punk typography on black and white minimalist background, underground opium gang aesthetic, gritty [MOOD] energy, distorted textures, punk rock inspired layout, 1024x1024 square format',
-                colors: 'black white red',
-                aesthetic: 'underground opium gang',
-                typography: 'bold red punk'
-            },
-            'melodic-hiphop': {
-                template: '"[TRACK_TITLE]" melodic hip hop album artwork, [VISUAL_ELEMENTS], elegant serif typography, warm purple gold gradients, luxury minimalist aesthetic, smooth [MOOD] atmosphere, cinematic lighting effects, professional layout, 1024x1024 square format',
-                colors: 'warm purple gold gradients',
-                aesthetic: 'luxury minimalist',
-                typography: 'elegant serif'
-            },
-            'rnb': {
-                template: '"[TRACK_TITLE]" R&B soul album artwork, [VISUAL_ELEMENTS], sophisticated typography, rich purple gold gradients, soulful aesthetic, smooth [MOOD] vibes, warm lighting, elegant layout, 1024x1024 square format',
-                colors: 'rich purple gold',
-                aesthetic: 'soulful elegant',
-                typography: 'sophisticated'
-            },
-            'electronic': {
-                template: '"[TRACK_TITLE]" electronic music album cover, [VISUAL_ELEMENTS], neon geometric typography, electric blue cyan gradients, cyberpunk aesthetic, high energy [MOOD] vibes, holographic textures, futuristic layout, 1024x1024 square format',
-                colors: 'electric blue cyan gradients',
-                aesthetic: 'cyberpunk',
-                typography: 'neon geometric'
-            },
-            'lofi': {
-                template: '"[TRACK_TITLE]" lo-fi chill album artwork, [VISUAL_ELEMENTS], handwritten script typography, soft pastel earth tones, vintage analog aesthetic, relaxed [MOOD] atmosphere, warm textures, cozy layout, 1024x1024 square format',
-                colors: 'soft pastel earth tones',
-                aesthetic: 'vintage analog',
-                typography: 'handwritten script'
-            },
-            'drill': {
-                template: '"[TRACK_TITLE]" UK drill album cover, [VISUAL_ELEMENTS], aggressive sans-serif typography, monochrome with blue accents, gritty street aesthetic, raw [MOOD] energy, urban textures, bold layout, 1024x1024 square format',
-                colors: 'monochrome with blue accents',
-                aesthetic: 'gritty street',
-                typography: 'aggressive sans-serif'
+                template: '"[TRACK_TITLE]" dark rage trap album cover 2025 style, [VISUAL_ELEMENTS], distorted gothic typography with glitch effects, high contrast black white red color scheme, Ken Carson Opium aesthetic, raw [MOOD] energy, corrupted digital textures, anti-design punk layout, grain overlay, 1024x1024 square format',
+                colors: 'black white blood red',
+                aesthetic: 'opium gang anti-design',
+                typography: 'distorted gothic glitch',
+                recommendedMoods: ['aggressive', 'dark', 'chaotic', 'menacing']
             },
             'trap': {
-                template: '"[TRACK_TITLE]" modern trap album cover, [VISUAL_ELEMENTS], bold urban typography, deep purple and black gradients, street aesthetic, powerful [MOOD] energy, clean production layout, 1024x1024 square format',
-                colors: 'deep purple and black',
-                aesthetic: 'modern street',
-                typography: 'bold urban'
+                template: '"[TRACK_TITLE]" modern trap album cover 2025, [VISUAL_ELEMENTS], bold condensed sans-serif typography, deep purple magenta black gradients, contemporary street luxury aesthetic, intense [MOOD] atmosphere, chrome 3D elements, clean minimalist layout with bold accents, 1024x1024 square format',
+                colors: 'deep purple magenta black',
+                aesthetic: 'street luxury minimal',
+                typography: 'bold condensed sans-serif',
+                recommendedMoods: ['aggressive', 'dark', 'luxury', 'menacing']
+            },
+            'pluggnb': {
+                template: '"[TRACK_TITLE]" pluggnb album cover 2025 aesthetic, [VISUAL_ELEMENTS], ethereal glowing typography, dreamy pink purple blue pastel gradients, soft cloud textures with sparkle effects, heavenly [MOOD] vibes, angelic floating elements, Y2K inspired modern layout, lens flare effects, 1024x1024 square format',
+                colors: 'pastel pink purple blue iridescent',
+                aesthetic: 'ethereal Y2K angelic',
+                typography: 'soft glowing ethereal',
+                recommendedMoods: ['dreamy', 'ethereal', 'melancholic', 'euphoric']
+            },
+            'plugg': {
+                template: '"[TRACK_TITLE]" plugg album artwork 2025, [VISUAL_ELEMENTS], clean futuristic typography, neon green purple gradient palette, atmospheric haze effects, smooth [MOOD] energy, minimalist composition with floating 3D objects, cyber organic textures, modern experimental layout, 1024x1024 square format',
+                colors: 'neon green purple gradient',
+                aesthetic: 'cyber organic minimal',
+                typography: 'clean futuristic sans',
+                recommendedMoods: ['chill', 'hypnotic', 'futuristic', 'dreamy']
+            },
+
+            // === Experimental / Hyperpop系 ===
+            'hyperpop': {
+                template: '"[TRACK_TITLE]" hyperpop digicore album cover 2025, [VISUAL_ELEMENTS], chaotic mixed typography with multiple fonts, hyper-saturated neon rainbow colors, maximalist glitched aesthetic, intense [MOOD] chaos, digital artifacts and compression textures, anti-design experimental layout, chrome 3D hearts and stars, 1024x1024 square format',
+                colors: 'hyper-saturated neon rainbow chrome',
+                aesthetic: 'maximalist digital chaos',
+                typography: 'chaotic mixed fonts glitch',
+                recommendedMoods: ['chaotic', 'euphoric', 'energetic', 'futuristic']
+            },
+            'glitchcore': {
+                template: '"[TRACK_TITLE]" glitchcore album artwork 2025, [VISUAL_ELEMENTS], corrupted distorted typography, broken RGB color channels, heavy digital corruption aesthetic, unstable [MOOD] energy, scan lines and data moshing effects, fragmented experimental layout, VHS tracking errors, 1024x1024 square format',
+                colors: 'corrupted RGB cyan magenta',
+                aesthetic: 'digital corruption',
+                typography: 'corrupted distorted broken',
+                recommendedMoods: ['chaotic', 'dark', 'aggressive', 'hypnotic']
+            },
+
+            // === Phonk / Drift系 ===
+            'phonk': {
+                template: '"[TRACK_TITLE]" phonk album cover 2025, [VISUAL_ELEMENTS], bold retro-futuristic typography, deep crimson red black gradient, cowboy skull motifs, menacing [MOOD] atmosphere, vintage VHS grain texture, drift culture aesthetic, Memphis rap inspired elements, 1024x1024 square format',
+                colors: 'crimson red blood black',
+                aesthetic: 'drift culture retro',
+                typography: 'bold retro-futuristic',
+                recommendedMoods: ['menacing', 'dark', 'aggressive', 'hypnotic']
+            },
+            'drift-phonk': {
+                template: '"[TRACK_TITLE]" drift phonk album artwork 2025, [VISUAL_ELEMENTS], aggressive Japanese typography mixed with western fonts, red black white high contrast, JDM car culture aesthetic, intense [MOOD] energy, speed motion blur effects, Tokyo drift inspired layout, vintage Japanese signage elements, 1024x1024 square format',
+                colors: 'red black white Japanese',
+                aesthetic: 'JDM drift culture',
+                typography: 'aggressive Japanese mixed',
+                recommendedMoods: ['aggressive', 'menacing', 'energetic', 'hypnotic']
+            },
+            'memphis-phonk': {
+                template: '"[TRACK_TITLE]" Memphis phonk album cover 2025, [VISUAL_ELEMENTS], gritty horror-style typography, dark purple black smoky gradients, Three 6 Mafia inspired occult aesthetic, sinister [MOOD] atmosphere, cassette tape textures, lo-fi grainy overlay, underground Memphis layout, 1024x1024 square format',
+                colors: 'dark purple black smoke',
+                aesthetic: 'Memphis occult underground',
+                typography: 'gritty horror style',
+                recommendedMoods: ['dark', 'menacing', 'hypnotic', 'gritty']
+            },
+
+            // === Regional系 ===
+            'drill': {
+                template: '"[TRACK_TITLE]" UK drill album cover 2025, [VISUAL_ELEMENTS], aggressive block typography, monochrome with ice blue accents, cold London street aesthetic, raw [MOOD] energy, urban concrete textures, masked figure silhouettes, gritty documentary style layout, 1024x1024 square format',
+                colors: 'monochrome ice blue cold',
+                aesthetic: 'London street cold',
+                typography: 'aggressive block sans',
+                recommendedMoods: ['aggressive', 'dark', 'menacing', 'gritty']
+            },
+            'ny-drill': {
+                template: '"[TRACK_TITLE]" NY drill album artwork 2025, [VISUAL_ELEMENTS], bold condensed street typography, dark navy blue black gradients, Bronx Brooklyn aesthetic, intense [MOOD] atmosphere, subway textures and urban decay, sample drill era layout, night city lighting, 1024x1024 square format',
+                colors: 'navy blue black urban',
+                aesthetic: 'NYC borough street',
+                typography: 'bold condensed street',
+                recommendedMoods: ['aggressive', 'menacing', 'dark', 'gritty']
+            },
+            'jersey-club': {
+                template: '"[TRACK_TITLE]" Jersey club album cover 2025, [VISUAL_ELEMENTS], bouncy playful typography, vibrant orange pink purple gradients, high energy club aesthetic, hype [MOOD] vibes, dynamic motion effects, party culture elements, bold maximalist layout, 1024x1024 square format',
+                colors: 'vibrant orange pink purple',
+                aesthetic: 'club party bounce',
+                typography: 'bouncy playful bold',
+                recommendedMoods: ['energetic', 'euphoric', 'chaotic', 'hypnotic']
+            },
+            'detroit-type': {
+                template: '"[TRACK_TITLE]" Detroit Flint type album artwork 2025, [VISUAL_ELEMENTS], raw street typography, muted brown gray earth tones, Michigan street aesthetic, gritty [MOOD] energy, industrial urban textures, abandoned building elements, raw documentary layout, 1024x1024 square format',
+                colors: 'muted brown gray earth',
+                aesthetic: 'Michigan industrial street',
+                typography: 'raw street condensed',
+                recommendedMoods: ['gritty', 'dark', 'menacing', 'aggressive']
+            },
+
+            // === Emotional系 ===
+            'melodic-hiphop': {
+                template: '"[TRACK_TITLE]" melodic hip hop album artwork 2025, [VISUAL_ELEMENTS], elegant modern serif typography, warm amber purple sunset gradients, luxury emotional aesthetic, smooth [MOOD] atmosphere, cinematic golden hour lighting, cloud and sky elements, refined minimalist layout, 1024x1024 square format',
+                colors: 'warm amber purple sunset',
+                aesthetic: 'luxury emotional cinematic',
+                typography: 'elegant modern serif',
+                recommendedMoods: ['dreamy', 'melancholic', 'luxury', 'nostalgic']
+            },
+            'emo-rap': {
+                template: '"[TRACK_TITLE]" emo rap sad trap album cover 2025, [VISUAL_ELEMENTS], broken emotional typography, desaturated blue gray tones with pink accents, sad boy aesthetic, melancholic [MOOD] atmosphere, rain and tear textures, heart break symbols, vulnerable artistic layout, 1024x1024 square format',
+                colors: 'desaturated blue gray pink',
+                aesthetic: 'sad boy vulnerable',
+                typography: 'broken emotional handwritten',
+                recommendedMoods: ['melancholic', 'dark', 'nostalgic', 'ethereal']
+            },
+            'rnb': {
+                template: '"[TRACK_TITLE]" R&B soul album artwork 2025, [VISUAL_ELEMENTS], sophisticated elegant typography, rich burgundy gold gradients, sensual luxury aesthetic, smooth [MOOD] vibes, warm candlelit atmosphere, velvet and silk textures, refined romantic layout, 1024x1024 square format',
+                colors: 'rich burgundy gold warm',
+                aesthetic: 'sensual luxury romantic',
+                typography: 'sophisticated elegant script',
+                recommendedMoods: ['luxury', 'dreamy', 'nostalgic', 'chill']
+            },
+
+            // === Global / Fusion系 ===
+            'afrobeats': {
+                template: '"[TRACK_TITLE]" Afrobeats fusion album cover 2025, [VISUAL_ELEMENTS], bold vibrant typography, rich orange gold green African palette, contemporary African diaspora aesthetic, joyful [MOOD] energy, traditional pattern textures, cultural fusion elements, dynamic celebratory layout, 1024x1024 square format',
+                colors: 'rich orange gold green African',
+                aesthetic: 'African diaspora contemporary',
+                typography: 'bold vibrant cultural',
+                recommendedMoods: ['energetic', 'euphoric', 'luxury', 'hypnotic']
+            },
+            'latin-trap': {
+                template: '"[TRACK_TITLE]" Latin trap reggaeton album artwork 2025, [VISUAL_ELEMENTS], bold fiery typography, hot red orange yellow flame gradients, Latin street luxury aesthetic, intense [MOOD] passion, tropical and urban fusion textures, Bad Bunny era inspired layout, 1024x1024 square format',
+                colors: 'hot red orange yellow flame',
+                aesthetic: 'Latin street luxury tropical',
+                typography: 'bold fiery latin',
+                recommendedMoods: ['energetic', 'aggressive', 'luxury', 'hypnotic']
+            },
+            'uk-garage': {
+                template: '"[TRACK_TITLE]" UK garage 2-step album cover 2025, [VISUAL_ELEMENTS], sleek modern typography, chrome silver blue gradients, sophisticated club aesthetic, smooth [MOOD] grooves, liquid metallic textures, early 2000s revival elements, refined dance music layout, 1024x1024 square format',
+                colors: 'chrome silver blue metallic',
+                aesthetic: 'sophisticated UK club',
+                typography: 'sleek modern chrome',
+                recommendedMoods: ['energetic', 'chill', 'futuristic', 'nostalgic']
+            },
+
+            // === Electronic / Chill系 ===
+            'electronic': {
+                template: '"[TRACK_TITLE]" electronic music album cover 2025, [VISUAL_ELEMENTS], neon geometric typography, electric cyan magenta gradients, cyberpunk futuristic aesthetic, high energy [MOOD] vibes, holographic iridescent textures, AI generated art style layout, chrome 3D elements, 1024x1024 square format',
+                colors: 'electric cyan magenta holographic',
+                aesthetic: 'cyberpunk AI futuristic',
+                typography: 'neon geometric tech',
+                recommendedMoods: ['futuristic', 'energetic', 'hypnotic', 'euphoric']
+            },
+            'lofi': {
+                template: '"[TRACK_TITLE]" lo-fi chill album artwork 2025, [VISUAL_ELEMENTS], warm handwritten typography, soft beige brown earth tones, cozy analog aesthetic, relaxed [MOOD] atmosphere, vintage paper grain textures, anime-inspired study room elements, nostalgic peaceful layout, 1024x1024 square format',
+                colors: 'soft beige brown earth warm',
+                aesthetic: 'cozy analog nostalgic',
+                typography: 'warm handwritten script',
+                recommendedMoods: ['chill', 'nostalgic', 'dreamy', 'melancholic']
             },
             'house': {
-                template: '"[TRACK_TITLE]" house music album cover, [VISUAL_ELEMENTS], clean modern typography, vibrant gradient colors, club aesthetic, uplifting [MOOD] energy, dynamic layout, 1024x1024 square format',
-                colors: 'vibrant gradient',
-                aesthetic: 'modern club',
-                typography: 'clean modern'
+                template: '"[TRACK_TITLE]" house music album cover 2025, [VISUAL_ELEMENTS], clean Swiss typography, vibrant sunset gradient colors, Ibiza club aesthetic, uplifting [MOOD] energy, abstract geometric shapes, disco ball reflections, modern dance music layout, 1024x1024 square format',
+                colors: 'vibrant sunset gradient disco',
+                aesthetic: 'Ibiza club modern',
+                typography: 'clean Swiss geometric',
+                recommendedMoods: ['euphoric', 'energetic', 'chill', 'hypnotic']
             },
             'ambient': {
-                template: '"[TRACK_TITLE]" ambient music album artwork, [VISUAL_ELEMENTS], minimal typography, ethereal gradients, atmospheric aesthetic, peaceful [MOOD] atmosphere, spacious layout, 1024x1024 square format',
-                colors: 'ethereal gradients',
-                aesthetic: 'atmospheric minimal',
-                typography: 'minimal clean'
+                template: '"[TRACK_TITLE]" ambient music album artwork 2025, [VISUAL_ELEMENTS], ultra-minimal typography, ethereal soft gradients, meditative atmospheric aesthetic, peaceful [MOOD] transcendence, organic nature textures, vast landscape elements, spacious zen layout, 1024x1024 square format',
+                colors: 'ethereal soft gradient muted',
+                aesthetic: 'meditative atmospheric zen',
+                typography: 'ultra-minimal light',
+                recommendedMoods: ['ethereal', 'chill', 'dreamy', 'nostalgic']
             }
         };
 
-        // 音楽要素→視覚要素変換
+        // 音楽要素→視覚要素変換 - 2025年拡張版
         const visualElementsMap = {
-            'hypnotic': 'spiral patterns, swirling effects',
-            'bass': 'heavy wave forms, ground shaking patterns',
-            '808': 'massive 808 wave visualization',
-            'synth': 'electronic oscillator, frequency visualization',
-            'lead': 'leading melodic patterns',
-            'emotional': 'flowing tears, heart patterns',
-            'dark': 'shadows, void spaces',
-            'bright': 'light rays, glowing elements',
-            'fast': 'motion blur, speed lines',
-            'slow': 'static elements, peaceful flow',
-            'melodic': 'musical note patterns, harmony waves',
-            'aggressive': 'sharp edges, explosive patterns',
-            'chill': 'floating elements, soft clouds',
-            'vintage': 'aged textures, retro elements',
-            'midnight': 'dark shadows, night sky elements',
-            'sunrise': 'warm light rays, gradient sunrise',
-            'lost': 'fading elements, nostalgic textures',
-            'heavy': 'massive weight visualization',
-            'soul': 'soulful wave patterns, emotional depth',
-            'trap': 'modern urban patterns',
-            'drill': 'sharp geometric patterns',
-            'phonk': 'dark distorted patterns',
-            'future': 'futuristic geometric elements',
-            'retro': 'vintage nostalgic elements'
+            // 基本要素
+            'hypnotic': 'spiral patterns, swirling hypnotic effects',
+            'bass': 'heavy wave forms, ground shaking bass visualization',
+            '808': 'massive 808 sub-bass wave visualization',
+            'synth': 'electronic oscillator patterns, frequency visualization',
+            'lead': 'leading melodic wave patterns',
+            'emotional': 'flowing emotional textures, heart patterns',
+            'dark': 'deep shadows, void space elements',
+            'bright': 'ethereal light rays, glowing elements',
+            'fast': 'motion blur, speed line effects',
+            'slow': 'static elements, peaceful flow textures',
+            'melodic': 'musical harmony waves, flowing note patterns',
+            'aggressive': 'sharp edges, explosive burst patterns',
+            'chill': 'floating cloud elements, soft atmospheric layers',
+            'vintage': 'aged textures, retro grain elements',
+            'midnight': 'dark shadows, night sky starfield elements',
+            'sunrise': 'warm golden light rays, gradient sunrise colors',
+            'lost': 'fading elements, nostalgic haze textures',
+            'heavy': 'massive weight visualization, crushing pressure',
+            'soul': 'soulful wave patterns, emotional depth layers',
+            'trap': 'modern urban patterns, street luxury elements',
+            'drill': 'sharp geometric patterns, cold urban textures',
+            'phonk': 'dark distorted patterns, cowboy skull motifs',
+            'future': 'futuristic geometric elements, chrome 3D shapes',
+            'retro': 'vintage nostalgic elements, VHS grain',
+
+            // 2025年トレンドキーワード
+            'rage': 'distorted glitch textures, aggressive noise patterns',
+            'plugg': 'ethereal cloud textures, dreamy haze effects',
+            'slime': 'dripping liquid textures, toxic green glow',
+            'demon': 'demonic dark energy, occult symbols',
+            'angel': 'angelic wings, divine light rays, halo elements',
+            'heaven': 'celestial cloud formations, golden divine light',
+            'hell': 'infernal fire textures, demonic red glow',
+            'opium': 'smoky haze, dreamlike distortion, dark luxury',
+            'glitch': 'digital corruption, RGB split effects, data moshing',
+            'chrome': 'reflective chrome surfaces, liquid metal textures',
+            'cyber': 'cyberpunk neon grids, holographic interfaces',
+            'vapor': 'vaporwave aesthetics, pink purple gradients',
+            'wave': 'flowing wave patterns, oceanic depth textures',
+            'ghost': 'transparent ethereal forms, spectral elements',
+            'void': 'empty void space, black hole effects',
+            'space': 'cosmic starfield, nebula clouds, galaxy spirals',
+            'neon': 'bright neon glow, electric light tubes',
+            'dream': 'dreamlike blur, soft focus ethereal textures',
+            'cloud': 'fluffy cloud formations, atmospheric layers',
+            'rain': 'rain drops, wet surface reflections, storm textures',
+            'fire': 'flame patterns, burning ember textures',
+            'ice': 'frozen crystal textures, cold blue tones',
+            'gold': 'luxurious gold textures, metallic shine',
+            'diamond': 'crystal diamond facets, brilliant light refraction',
+            'blood': 'dark crimson textures, dripping visceral elements',
+            'smoke': 'swirling smoke patterns, atmospheric haze',
+            'skull': 'skull motifs, skeletal elements',
+            'rose': 'rose flower elements, romantic textures',
+            'star': 'star shapes, celestial sparkle effects',
+            'moon': 'lunar surface, moonlight glow, crescent shapes',
+            'sun': 'solar flare, bright sunburst patterns',
+            'heart': 'heart shapes, emotional symbolism',
+            'broken': 'shattered glass, fragmented pieces',
+            'fade': 'gradient fade effects, dissolving edges',
+            'glow': 'soft glow aura, luminescent edges',
+            'drip': 'dripping liquid, melting textures',
+            'grunge': 'dirty grunge textures, worn distressed surfaces',
+            'clean': 'pristine clean surfaces, minimal textures',
+            'hard': 'hard edge geometric shapes, sharp angles',
+            'soft': 'soft gradient transitions, gentle curves',
+            'high': 'elevated perspective, floating elements',
+            'low': 'grounded heavy elements, deep bass visualization',
+            'bounce': 'bouncy motion effects, elastic energy',
+            'slide': 'sliding motion blur, smooth transitions',
+            'flip': 'rotating flip effects, dynamic movement',
+            'spin': 'spinning rotation, circular motion effects',
+            'drift': 'drifting motion blur, speed lines, tire smoke',
+            'racing': 'racing stripes, speedometer elements',
+            'street': 'urban street elements, graffiti textures',
+            'luxury': 'luxury textures, expensive materials, gold accents',
+            'hood': 'hood aesthetic elements, street culture',
+            'gang': 'gang culture motifs, street loyalty symbols',
+            'money': 'currency elements, wealth symbolism',
+            'ice': 'iced out jewelry, diamond encrusted textures',
+            'draco': 'weapon silhouettes, dangerous energy',
+            'perky': 'pill motifs, pharmaceutical aesthetic',
+            'lean': 'purple liquid, double cup symbolism',
+            'wock': 'cough syrup aesthetic, purple tones'
         };
 
         // BPM based effects
@@ -352,13 +569,31 @@
                 }
             });
             
-            // ジャンル固有の要素を追加
+            // ジャンル固有の要素を追加 - 2025年拡張版
             const genreElements = {
-                'rage-trap': 'hypnotic distorted patterns',
-                'drill': 'sharp urban shadows',
-                'lofi': 'vinyl record textures',
-                'electronic': 'digital wave patterns',
-                'rnb': 'smooth flowing curves'
+                'rage-trap': 'hypnotic distorted glitch patterns, opium aesthetic elements',
+                'trap': 'urban luxury patterns, chrome 3D elements',
+                'pluggnb': 'ethereal cloud textures, angelic sparkle effects',
+                'plugg': 'dreamy haze effects, floating 3D objects',
+                'hyperpop': 'chaotic digital artifacts, chrome hearts and stars',
+                'glitchcore': 'heavy data moshing, RGB corruption effects',
+                'phonk': 'cowboy skull motifs, VHS grain textures',
+                'drift-phonk': 'JDM car elements, Tokyo drift speed effects',
+                'memphis-phonk': 'occult symbols, cassette tape aesthetics',
+                'drill': 'cold urban shadows, masked silhouettes',
+                'ny-drill': 'NYC subway textures, borough street elements',
+                'jersey-club': 'bouncy party elements, dynamic motion effects',
+                'detroit-type': 'industrial decay textures, Michigan street elements',
+                'melodic-hiphop': 'cinematic golden hour lighting, cloud formations',
+                'emo-rap': 'rain textures, broken heart symbols',
+                'rnb': 'smooth velvet textures, candlelit ambiance',
+                'afrobeats': 'African pattern textures, cultural fusion elements',
+                'latin-trap': 'tropical flame textures, Latin street elements',
+                'uk-garage': 'liquid chrome textures, 2000s revival elements',
+                'lofi': 'vintage vinyl textures, anime study room elements',
+                'electronic': 'holographic interfaces, AI generated patterns',
+                'house': 'disco ball reflections, sunset gradient elements',
+                'ambient': 'vast landscape textures, organic nature elements'
             };
             
             if (genreElements[genre]) {
@@ -413,33 +648,91 @@
                     visualElements: visualElements,
                     colors: template.colors,
                     aesthetic: template.aesthetic,
-                    typography: template.typography
+                    typography: template.typography,
+                    recommendedMoods: template.recommendedMoods || []
                 }
             });
         }
 
         function generateVariations(title, genre, mood, visualElements) {
             const variations = [];
-            
-            // バリエーション1: アーティスティック
+            const genreDisplay = genre.replace(/-/g, ' ');
+            const template = genreTemplates[genre];
+
+            // バリエーション1: 2025 AI Art Style
             variations.push({
-                name: 'アーティスティック版',
-                prompt: `"${title.toUpperCase()}" artistic ${genre.replace('-', ' ')} album cover with abstract ${visualElements}, creative typography, artistic color palette, gallery-worthy aesthetic, professional fine art layout, 1024x1024 square format`
+                name: '2025 AI Art Style',
+                prompt: `"${title.toUpperCase()}" ${genreDisplay} album cover 2025, ${visualElements}, AI generated art style, chrome 3D typography, iridescent holographic gradients, contemporary digital aesthetic, ${mood || 'dynamic'} atmosphere, hyper-detailed textures, professional layout, 1024x1024 square format`
             });
-            
-            // バリエーション2: ミニマル
+
+            // バリエーション2: Anti-Design / Experimental
             variations.push({
-                name: 'ミニマル版', 
-                prompt: `"${title.toUpperCase()}" minimalist ${genre.replace('-', ' ')} cover, clean ${visualElements}, simple typography, minimal color scheme, modern aesthetic, balanced composition, 1024x1024 square format`
+                name: 'Anti-Design版',
+                prompt: `"${title.toUpperCase()}" experimental ${genreDisplay} cover 2025, deconstructed ${visualElements}, chaotic mixed typography, intentionally broken layout, anti-design aesthetic, raw ${mood || 'intense'} energy, glitch textures, underground art direction, 1024x1024 square format`
             });
-            
-            // バリエーション3: インテンス
+
+            // バリエーション3: Luxury Minimal
             variations.push({
-                name: 'インテンス版',
-                prompt: `"${title.toUpperCase()}" intense ${genre.replace('-', ' ')} album artwork, dramatic ${visualElements}, bold typography, high contrast colors, powerful aesthetic, dynamic composition, 1024x1024 square format`
+                name: 'Luxury Minimal版',
+                prompt: `"${title.toUpperCase()}" luxury minimal ${genreDisplay} artwork 2025, refined ${visualElements}, elegant thin typography, sophisticated color palette, high-end fashion aesthetic, smooth ${mood || 'refined'} atmosphere, premium textures, gallery-worthy composition, 1024x1024 square format`
             });
-            
+
+            // バリエーション4: Y2K Revival (ジャンルに応じて追加)
+            if (['pluggnb', 'hyperpop', 'glitchcore', 'electronic'].includes(genre)) {
+                variations.push({
+                    name: 'Y2K Revival版',
+                    prompt: `"${title.toUpperCase()}" Y2K revival ${genreDisplay} cover 2025, nostalgic ${visualElements}, chrome bubble typography, early 2000s aesthetic with modern twist, ${mood || 'dreamy'} cyber vibes, glossy plastic textures, futuristic retro layout, 1024x1024 square format`
+                });
+            }
+
             return variations;
+        }
+
+        // ジャンル別おすすめムード更新機能
+        function updateMoodOptions() {
+            const genre = document.getElementById('genre').value;
+            const moodHint = document.getElementById('moodHint');
+            const moodSelect = document.getElementById('mood');
+
+            if (!genre || !genreTemplates[genre]) {
+                moodHint.textContent = '';
+                return;
+            }
+
+            const template = genreTemplates[genre];
+            const recommended = template.recommendedMoods;
+
+            if (recommended && recommended.length > 0) {
+                const moodLabels = {
+                    'aggressive': 'Aggressive',
+                    'dreamy': 'Dreamy',
+                    'energetic': 'Energetic',
+                    'chill': 'Chill',
+                    'dark': 'Dark',
+                    'luxury': 'Luxury',
+                    'vintage': 'Vintage',
+                    'futuristic': 'Futuristic',
+                    'chaotic': 'Chaotic',
+                    'ethereal': 'Ethereal',
+                    'melancholic': 'Melancholic',
+                    'hypnotic': 'Hypnotic',
+                    'menacing': 'Menacing',
+                    'nostalgic': 'Nostalgic',
+                    'euphoric': 'Euphoric',
+                    'gritty': 'Gritty'
+                };
+
+                const recommendedLabels = recommended.map(m => moodLabels[m] || m).join(', ');
+                moodHint.textContent = `(おすすめ: ${recommendedLabels})`;
+                moodHint.style.color = '#667eea';
+
+                // おすすめのムードを選択状態にする
+                if (!moodSelect.value) {
+                    moodSelect.value = recommended[0];
+                }
+            } else {
+                moodHint.textContent = '';
+            }
         }
 
         function displayResults(results) {
@@ -459,6 +752,8 @@
                         <p><strong>視覚要素:</strong> ${results.analysis.visualElements}</p>
                         <p><strong>カラーパレット:</strong> ${results.analysis.colors}</p>
                         <p><strong>美学スタイル:</strong> ${results.analysis.aesthetic}</p>
+                        <p><strong>タイポグラフィ:</strong> ${results.analysis.typography}</p>
+                        ${results.analysis.recommendedMoods.length > 0 ? `<p><strong>おすすめムード:</strong> ${results.analysis.recommendedMoods.join(', ')}</p>` : ''}
                     </div>
                     <div class="prompt-text" id="prompt-main">${results.main}</div>
                 </div>
